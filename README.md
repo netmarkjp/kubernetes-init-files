@@ -14,7 +14,8 @@ Kubernetes init files
 
 # Usage
 
-install
+## Install
+
 ```
 yum -y install docker git bzip2
 git clone https://github.com/netmarkjp/kubernetes-init-files.git /opt/kubernetes-init-files
@@ -42,7 +43,9 @@ systemctl start kube-scheduler.service
 systemctl start kubelet.service
 ```
 
-enable
+## Enable daemons
+
+enable for Kubernetes Master + Minion
 ```
 systemctl enable etcd.service
 systemctl enable flanneld.service
@@ -51,5 +54,25 @@ systemctl enable kube-apiserver.service
 systemctl enable kube-controller-manager.service
 systemctl enable kube-proxy.service
 systemctl enable kube-scheduler.service
+systemctl enable kubelet.service
+```
+
+enable for Kubernetes Master only
+```
+systemctl enable etcd.service
+systemctl enable flanneld.service
+systemctl enable docker.service
+systemctl enable kube-apiserver.service
+systemctl enable kube-controller-manager.service
+systemctl enable kube-scheduler.service
+systemctl enable kubelet.service
+```
+
+enable for Kubernetes Minion only
+```
+systemctl enable etcd.service
+systemctl enable flanneld.service
+systemctl enable docker.service
+systemctl enable kube-proxy.service
 systemctl enable kubelet.service
 ```
