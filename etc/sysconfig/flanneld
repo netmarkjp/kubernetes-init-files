@@ -1,0 +1,4 @@
+ETCD_ENDPOINT=http://127.0.0.1:4001
+IP_MASQ=true
+IFACE=eth0
+OPTS=

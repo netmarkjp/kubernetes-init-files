@@ -1,0 +1,13 @@
+[Unit]
+Description=kubelet
+After=etcd.service
+Requires=etcd.service
+
+[Service]
+Type=simple
+EnvironmentFile=-/etc/sysconfig/kubelet
+ExecStart=/usr/local/sbin/kubelet -address=${ADDRESS} -etcd_servers=${ETCD_SERVERS} -v=${LOGLEVEL} ${OPTS}
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

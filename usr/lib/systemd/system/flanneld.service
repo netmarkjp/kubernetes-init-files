@@ -1,0 +1,13 @@
+[Unit]
+Description=flanneld
+After=etcd.service
+Requires=etcd.service
+
+[Service]
+Type=simple
+EnvironmentFile=-/etc/sysconfig/flanneld
+ExecStart=/usr/local/sbin/flanneld -etcd-endpoint=${ETCD_ENDPOINT} -ip-masq=${IP_MASQ} -iface=${IFACE} ${OPTS}
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

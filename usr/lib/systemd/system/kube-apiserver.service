@@ -1,0 +1,13 @@
+[Unit]
+Description=kube-apiserver
+After=etcd.service
+Requires=etcd.service
+
+[Service]
+Type=simple
+EnvironmentFile=-/etc/sysconfig/kube-apiserver
+ExecStart=/usr/local/sbin/kube-apiserver -address=${ADDRESS} -port=${PORT} -etcd_servers=${ETCD_SERVERS} -portal_net=${PORTAL_NET} -cors_allowed_origins=${CORS_ALLOWED_ORIGINS} -v=${LOGLEVEL} ${OPTS}
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

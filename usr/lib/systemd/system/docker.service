@@ -1,0 +1,21 @@
+[Unit]
+Description=Docker Application Container Engine
+Documentation=http://docs.docker.io
+After=network.target
+Requires=docker.socket
+After=flannel.service
+Requires=flannel.service
+
+[Service]
+Type=notify
+EnvironmentFile=-/etc/sysconfig/docker
+EnvironmentFile=-/etc/sysconfig/docker-storage
+EnvironmentFile=-/run/flannel/subnet.env
+ExecStart=/usr/bin/docker -d $OPTIONS $DOCKER_STORAGE_OPTIONS --bip=${FLANNEL_SUBNET} --mtu=${FLANNEL_MTU}
+Restart=on-failure
+LimitNOFILE=1048576
+LimitNPROC=1048576
+
+[Install]
+Also=docker.socket
+WantedBy=multi-user.target

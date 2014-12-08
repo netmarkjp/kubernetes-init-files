@@ -1,0 +1,13 @@
+[Unit]
+Description=kube-proxy
+After=etcd.service
+Requires=etcd.service
+
+[Service]
+Type=simple
+EnvironmentFile=-/etc/sysconfig/kube-proxy
+ExecStart=/usr/local/sbin/kube-proxy -master=${MASTER} -v=${LOGLEVEL} ${OPTS}
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

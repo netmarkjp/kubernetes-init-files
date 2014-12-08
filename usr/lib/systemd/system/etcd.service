@@ -1,0 +1,12 @@
+[Unit]
+Description=etcd
+After=network.target
+
+[Service]
+Type=simple
+EnvironmentFile=-/etc/sysconfig/etcd
+ExecStart=/usr/local/sbin/etcd -name=${NAME} -data-dir=${DATA_DIR} -addr=${ADDR} -peer-addr=${PEER_ADDR} ${OPTS}
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

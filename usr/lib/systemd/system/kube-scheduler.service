@@ -1,0 +1,13 @@
+[Unit]
+Description=kube-scheduler
+After=etcd.service
+Requires=etcd.service
+
+[Service]
+Type=simple
+EnvironmentFile=-/etc/sysconfig/kube-scheduler
+ExecStart=/usr/local/sbin/kube-scheduler -master=${MASTER} -v=${LOGLEVEL} ${OPTS}
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

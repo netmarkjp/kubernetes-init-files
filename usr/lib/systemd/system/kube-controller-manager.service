@@ -1,0 +1,13 @@
+[Unit]
+Description=kube-controller-manager
+After=etcd.service
+Requires=etcd.service
+
+[Service]
+Type=simple
+EnvironmentFile=-/etc/sysconfig/kube-controller-manager
+ExecStart=/usr/local/sbin/kube-controller-manager -machines=${MACHINES} -master=${MASTER} -v=${LOGLEVEL} ${OPTS}
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
