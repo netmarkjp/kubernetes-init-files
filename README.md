@@ -16,18 +16,25 @@ Kubernetes init files
 
 install
 ```
-yum -y install docker git
+yum -y install docker git bzip2
 git clone https://github.com/netmarkjp/kubernetes-init-files.git /opt/kubernetes-init-files
 tar jxf /opt/kubernetes-init-files/usr/local/sbin.tar.bz2 -C /usr/local/.
-cp -f /opt/kubernetes-init-files/usr/lib/systemd/system/* /usr/lib/systemd/system/.
-cp -f /opt/kubernetes-init-files/etc/sysconfig/* /etc/sysconfig/.
+yes | cp /opt/kubernetes-init-files/usr/lib/systemd/system/* /usr/lib/systemd/system/.
+yes | cp /opt/kubernetes-init-files/etc/sysconfig/* /etc/sysconfig/.
 systemctl daemon-reload
+```
+
+init for flannel
+```
+systemctl start etcd.service
+etcdctl mk /coreos.com/network/config '{"Network":"172.17.0.0/16"}'
 ```
 
 boot
 ```
 systemctl start etcd.service
 systemctl start flanneld.service
+systemctl start docker.service
 systemctl start kube-apiserver.service
 systemctl start kube-controller-manager.service
 systemctl start kube-proxy.service
@@ -39,6 +46,7 @@ enable
 ```
 systemctl enable etcd.service
 systemctl enable flanneld.service
+systemctl enable docker.service
 systemctl enable kube-apiserver.service
 systemctl enable kube-controller-manager.service
 systemctl enable kube-proxy.service
